@@ -465,10 +465,6 @@ class OspreyCoordinatorInputStream(AsyncBaseInputStream[BaseAckingContext[Osprey
                     await bidirectional_stream.send_graceful_disconnect(ack_id, verdicts=context.get_verdicts())
                     break
 
-                # Pause-and-rotate on rule reload. Mirrors the gevent equivalent at
-                # osprey/worker/sinks/sink/osprey_coordinator_input_stream.py:325-331:
-                # disconnect the bidi stream so the coordinator routes work elsewhere,
-                # wait for the reload to finish, then let the outer loop reconnect.
                 if (
                     self._input_stream_ready_signaler is not None
                     and self._input_stream_ready_signaler.should_pause_input_stream()
